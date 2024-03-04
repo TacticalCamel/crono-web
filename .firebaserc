@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "activity-tracker-angular": {
+      "hosting": {
+        "activity-tracker-angular": [
+          "activity-tracker-angular"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "activity-tracker-angular"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "hosting": [
+    {
+      "target": "activity-tracker-angular",
+      "source": ".",
+      "frameworksBackend": {}
+    }
+  ]
+}
