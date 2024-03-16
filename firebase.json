@@ -1,7 +1,7 @@
 {
   "hosting": [
     {
-      "target": "activity-tracker-angular",
+      "target": "crono-web",
       "source": ".",
       "frameworksBackend": {}
     }

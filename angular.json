@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "activity-tracker-angular": {
+    "crono-web": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/activity-tracker-angular",
+            "outputPath": "dist/crono-web",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -57,10 +57,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "activity-tracker-angular:build:production"
+              "buildTarget": "crono-web:build:production"
             },
             "development": {
-              "buildTarget": "activity-tracker-angular:build:development"
+              "buildTarget": "crono-web:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -68,7 +68,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "activity-tracker-angular:build"
+            "buildTarget": "crono-web:build"
           }
         },
         "test": {
@@ -96,12 +96,12 @@
           },
           "configurations": {
             "production": {
-              "buildTarget": "activity-tracker-angular:build:production",
-              "serveTarget": "activity-tracker-angular:serve:production"
+              "buildTarget": "crono-web:build:production",
+              "serveTarget": "crono-web:serve:production"
             },
             "development": {
-              "buildTarget": "activity-tracker-angular:build:development",
-              "serveTarget": "activity-tracker-angular:serve:development"
+              "buildTarget": "crono-web:build:development",
+              "serveTarget": "crono-web:serve:development"
             }
           },
           "defaultConfiguration": "production"

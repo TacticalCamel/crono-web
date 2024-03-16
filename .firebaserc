@@ -1,14 +1,14 @@
 {
   "targets": {
-    "activity-tracker-angular": {
+    "crono-web": {
       "hosting": {
-        "activity-tracker-angular": [
-          "activity-tracker-angular"
+        "crono-web": [
+          "crono-web"
         ]
       }
     }
   },
   "projects": {
-    "default": "activity-tracker-angular"
+    "default": "crono-web"
   }
 }

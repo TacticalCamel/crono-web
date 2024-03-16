@@ -10,5 +10,5 @@ import { RouterOutlet } from '@angular/router';
 })
 
 export class AppComponent {
-  title = 'activity-tracker-angular';
+  title = 'crono-web';
 }
