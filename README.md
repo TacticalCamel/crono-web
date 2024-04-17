@@ -1,15 +1,18 @@
 # Crono
-
+### Webfejlesztési keretrendszerek kötprog: Saját téma / Szabadidő beosztást segítő weboldal
 <div align="center">
-
+  
   [![Website](https://img.shields.io/badge/Firebase_weboldal-BB46FF)](https://crono-web.firebaseapp.com)
   [![CI](https://github.com/TacticalCamel/crono-web/actions/workflows/firebase-hosting-merge.yml/badge.svg?event=push)](https://github.com/TacticalCamel/crono-web/actions/workflows)
   
 </div>
 
-### Webfejlesztési keretrendszerek kötprog: Saját téma / Szabadidő beosztást segítő weboldal
+### Rövid leírás
+- TODO
 
-- TODO rövid leírás
+### Megjegyzések
+- Asztali nézet teszteléséhez használt felbontás: 2560 x 1280 px (pl. 1440p monitor)
+- Mobil nézet teszteléséhez használt felbontás: 412 x 915 dp (pl. Google Pixel 7 telefon)
 
 ### Pontozás
 
@@ -33,3 +36,5 @@
 - [ ] 1 pont | Legalább 4 különböző route a különböző oldalak eléréséhez
 - [ ] 2 pont | Legalább 2 route levédése azonosítással, ahol ennek értelme van (AuthGuard)
 - [ ] 6 pont | Szubjektív pontozás a projekt egészére (mennyire fedi le a projekt a témakört, mennyi lehet a befektetett energia a projektben)
+#### Összesen: 40
+#### Minimum pontszám: 20
