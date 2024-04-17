@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
-import {getAuth, createUserWithEmailAndPassword, User, Auth, UserCredential} from "firebase/auth";
+import {AuthService} from "../../services/auth.service";
+import {UserModel} from "../../models/user.model";
 
 @Component({
     selector: 'route-register',
@@ -18,11 +19,13 @@ import {getAuth, createUserWithEmailAndPassword, User, Auth, UserCredential} fro
 })
 
 export class RegisterComponent {
-    undef: undefined = undefined;
-    auth: Auth = getAuth();
     email: string = '';
     password: string = '';
     passwordConfirm: string = '';
+    username: string = '';
+
+    constructor(private authService: AuthService) {
+    }
 
     tryRegister(): void {
         if (this.password !== this.passwordConfirm) {
@@ -30,18 +33,11 @@ export class RegisterComponent {
             return;
         }
 
-        createUserWithEmailAndPassword(this.auth, this.email, this.password)
-            .then((userCredential: UserCredential): void => {
-                // Signed up
-                const user: User = userCredential.user;
+        const model: UserModel = new UserModel('', this.email, this.password, this.username);
 
-                console.log(`success: ${user}`);
-            })
-            .catch((error): void => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-
-                console.log(`error ${errorCode}: ${errorMessage}`);
+        this.authService.register(model)
+            .then((result: boolean): void => {
+                console.log(result ? "success" : "fail");
             });
     }
 }

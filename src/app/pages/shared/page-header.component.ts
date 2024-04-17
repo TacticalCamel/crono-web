@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {NgOptimizedImage} from "@angular/common";
 
 @Component({
-    selector: 'app-header',
+    selector: 'page-header',
     standalone: true,
     imports: [
         NgOptimizedImage
@@ -17,7 +17,7 @@ import {NgOptimizedImage} from "@angular/common";
                 </div>
                 <div class="navbar-start">
                     <a href="/" class="flex me-8">
-                        <img ngSrc="../../assets/icon48.png" height="48" width="48" alt="icon"/>
+                        <img ngSrc="../../../assets/icon.svg" height="48" width="48" alt="icon"/>
                         <span class="px-4 text-4xl font-semibold text-gray-200">Crono</span>
                     </a>
                     <a class="btn btn-ghost btn-md text-lg" href="/analysis">Analysis</a>
@@ -43,6 +43,6 @@ import {NgOptimizedImage} from "@angular/common";
     `
 })
 
-export class HeaderComponent {
+export class PageHeaderComponent {
 
 }

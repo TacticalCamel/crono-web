@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import {LoginComponent} from "./routes/login.component";
-import {IndexComponent} from "./routes/index.component";
-import {RegisterComponent} from "./routes/register.component";
-import {PageNotFoundComponent} from "./routes/page-not-found.component";
+import {LoginComponent} from "./pages/login/login.component";
+import {IndexComponent} from "./pages/index/index.component";
+import {RegisterComponent} from "./pages/register/register.component";
+import {PageNotFoundComponent} from "./pages/shared/page-not-found.component";
 
 export const routes: Routes = [
     {path: '', component: IndexComponent},

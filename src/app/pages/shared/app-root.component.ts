@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {HeaderComponent} from "./header.component";
-import {FooterComponent} from "./footer.component";
+import {PageHeaderComponent} from "./page-header.component";
+import {PageFooterComponent} from "./page-footer.component";
 
 @Component({
     selector: 'app-root',
     standalone: true,
-    imports: [RouterOutlet, HeaderComponent, FooterComponent],
+    imports: [RouterOutlet, PageHeaderComponent, PageFooterComponent],
     template: `
         <router-outlet/>
     `,
@@ -23,6 +23,6 @@ import {FooterComponent} from "./footer.component";
     `
 })
 
-export class RootComponent {
+export class AppRootComponent {
 
 }
