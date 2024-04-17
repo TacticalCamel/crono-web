@@ -5,9 +5,11 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   template: `
-    <p>
-      Login works!
-    </p>
+      <main>
+          <form>
+              <input>
+          </form>
+      </main>
   `
 })
 
