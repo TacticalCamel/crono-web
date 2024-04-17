@@ -7,7 +7,7 @@
   
 </div>
 
-### Webfejlesztési keretrendszerek kötprog: Saját téma / Időbeosztás követő weboldal
+### Webfejlesztési keretrendszerek kötprog: Saját téma / Szabadidő beosztást segítő weboldal
 
 - TODO rövid leírás
 
