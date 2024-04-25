@@ -6,7 +6,7 @@ import {Component} from '@angular/core';
     imports: [],
     template: `
         <footer class="bg-neutral flex justify-end px-8 py-0.5">
-            <a class="link link-primary" href="https://github.com/TacticalCamel/crono-web">https://github.com/TacticalCamel/crono-web</a>
+            <a class="link link-primary" href="https://github.com/TacticalCamel/crono-web">Github repo</a>
         </footer>
     `
 })
