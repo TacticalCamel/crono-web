@@ -1,0 +1,37 @@
+@use '../../node_modules/@angular/material/index' as mat;
+
+@include mat.core();
+
+// define color palettes
+// available color palettes: https://material.io/design/color/
+$crono-web-primary: mat.define-palette(mat.$indigo-palette);
+$crono-web-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$crono-web-warn: mat.define-palette(mat.$red-palette);
+
+
+// light theme
+$crono-light-theme: mat.define-light-theme((
+    color: (
+        primary: $crono-web-primary,
+        accent: $crono-web-accent,
+        warn: $crono-web-warn,
+        success: mat.define-palette(mat.$green-palette),
+    ),
+    typography: mat.define-typography-config(),
+    density: 0,
+));
+
+
+// dark theme
+$crono-dark-theme: mat.define-dark-theme((
+    color: (
+        primary: $crono-web-primary,
+        accent: $crono-web-accent,
+        warn: $crono-web-warn,
+    ),
+    typography: mat.define-typography-config(),
+    density: 0,
+));
+
+// set current theme
+@include mat.all-component-themes($crono-dark-theme);

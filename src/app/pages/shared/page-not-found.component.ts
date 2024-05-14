@@ -1,13 +1,11 @@
 import {Component} from '@angular/core';
 import {NgOptimizedImage} from "@angular/common";
-import {PageFooterComponent} from "./page-footer.component";
 
 @Component({
     selector: 'page-not-found',
     standalone: true,
     imports: [
-        NgOptimizedImage,
-        PageFooterComponent
+        NgOptimizedImage
     ],
     template: `
         <main class="size-full flex flex-col">
@@ -26,7 +24,6 @@ import {PageFooterComponent} from "./page-footer.component";
                     </div>
                 </div>
             </div>
-            <page-footer/>
         </main>
     `,
     styles: `

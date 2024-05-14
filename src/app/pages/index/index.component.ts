@@ -1,31 +1,11 @@
-import { Component } from '@angular/core';
-import {PageHeaderComponent} from "../shared/page-header.component";
-import {PageFooterComponent} from "../shared/page-footer.component";
+import {Component} from '@angular/core';
 
 @Component({
     selector: 'route-index',
     standalone: true,
-    imports: [
-        PageHeaderComponent,
-        PageFooterComponent
-    ],
+    imports: [],
     template: `
-        <page-header/>
-        <main class="grow mt-16">
-            <div></div>
-        </main>
-        <page-footer/>
-    `,
-    styles: `
-        :host {
-            display: flex;
-            flex-direction: column;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-        }
+        <div>Hello index!</div>
     `
 })
 

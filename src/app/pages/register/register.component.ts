@@ -4,6 +4,7 @@ import {AbstractControl, FormControl, FormGroup, FormsModule, ValidationErrors, 
 import {Component} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {FieldValidationMessageComponent} from "../shared/field-validation-message.component";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'route-register',
@@ -67,8 +68,7 @@ export class RegisterComponent {
         passwordConfirm: new FormControl('')
     }, {validators: [passwordsConfirmValidator]});
 
-    // inject the AuthService into the constructor
-    constructor(private auth: AuthService) {
+    constructor(private authService: AuthService, private router: Router) {
 
     }
 
@@ -88,17 +88,12 @@ export class RegisterComponent {
         return this.registerForm.get('passwordConfirm')!;
     }
 
-    // register a new user with email, password, and username
     async tryRegister() {
-        // register a new user with email, password, and username
-        const success = await this.auth.register(this.email.value, this.password.value, this.username.value);
-
-        // if the user is registered successfully
-        if (success) {
-            alert('success')
-        } else {
-            alert('error')
-        }
+        this.authService.register(this.email.value, this.password.value, this.username.value).then(cred => {
+            this.router.navigate(['/login']);
+        }).catch(_ => {
+            this.registerForm.setErrors({invalid: true});
+        });
     }
 }
 
