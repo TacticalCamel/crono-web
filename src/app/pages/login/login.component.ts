@@ -27,8 +27,8 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
         RouterLink
     ],
     template: `
-        <div class="flex flex-col justify-center items-center h-full">
-            <form class="w-96 grid gap-6" [formGroup]="loginForm" (ngSubmit)="tryLogin()">
+        <div class="flex flex-col justify-center items-center p-8 my-auto">
+            <form class="w-full sm:w-96 grid gap-6" [formGroup]="loginForm" (ngSubmit)="tryLogin()">
                 <mat-form-field appearance="outline">
                     <mat-icon color="primary" matPrefix>email</mat-icon>
                     <mat-label>Email</mat-label>
@@ -62,10 +62,18 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
                         <mat-error>Invalid login credentials</mat-error>
                     }
                 </div>
-                
-                <a routerLink="/register" class="hover:underline text-indigo-500 cursor-pointer">Don't have an account? Register here.</a>
+
+                <a routerLink="/register" class="no-underline hover:underline text-indigo-500 cursor-pointer py-2">Don't have an account? Register here.</a>
             </form>
         </div>
+    `,
+    styles: `
+        :host {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
     `
 })
 

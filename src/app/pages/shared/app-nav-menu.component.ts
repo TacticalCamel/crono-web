@@ -41,7 +41,7 @@ import {AuthService} from "../../services/auth.service";
     `,
     styles: `
         .is-active {
-            background: #aaaaaa80 !important;
+            background: #dd9020 !important;
         }
     `
 })

@@ -3,7 +3,7 @@ import {NgIf} from "@angular/common";
 import {AbstractControl, FormControl, FormGroup, FormsModule, ValidationErrors, Validators} from "@angular/forms";
 import {Component, OnInit} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
-import {Router} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {MatError, MatFormField, MatLabel, MatPrefix} from "@angular/material/form-field";
 import {MatIcon} from "@angular/material/icon";
 import {MatInput} from "@angular/material/input";
@@ -24,11 +24,12 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
         MatLabel,
         MatPrefix,
         MatButton,
-        MatProgressSpinner
+        MatProgressSpinner,
+        RouterLink
     ],
     template: `
-        <div class="flex flex-col justify-center items-center h-full">
-            <form class="w-96 grid gap-6" [formGroup]="registerForm" (ngSubmit)="tryRegister()">
+        <div class="flex flex-col justify-center items-center p-8">
+            <form class="w-full sm:w-96 grid gap-6" [formGroup]="registerForm" (ngSubmit)="tryRegister()">
                 <mat-form-field appearance="outline">
                     <mat-icon color="primary" matPrefix>email</mat-icon>
                     <mat-label>Email</mat-label>
@@ -77,10 +78,9 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
                         formControlName="passwordConfirm"
                         required
                     />
-                    @if(passwordConfirm.getError('required')){
+                    @if (passwordConfirm.getError('required')) {
                         <mat-error>Confirms password is required</mat-error>
-                    }
-                    @else if(registerForm.getError('passwordsNotEqual')){
+                    } @else if (registerForm.getError('passwordsNotEqual')) {
                         <mat-error>Passwords must match</mat-error>
                     }
                 </mat-form-field>
@@ -90,12 +90,22 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
                     <mat-progress-spinner *ngIf="loading" [diameter]="35" mode="indeterminate"/>
                     <mat-error *ngIf="registerForm.getError('invalid')">{{ registerForm.getError('invalid') }}</mat-error>
                 </div>
+
+                <a routerLink="/login" class="no-underline hover:underline text-indigo-500 cursor-pointer py-2">Already have an account? Login here.</a>
             </form>
         </div>
+    `,
+    styles: `
+        :host {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
     `
 })
 
-export class RegisterComponent implements OnInit{
+export class RegisterComponent implements OnInit {
     readonly usernameMinLength: number = 4;
     readonly usernameMaxLength: number = 20;
 
@@ -113,7 +123,7 @@ export class RegisterComponent implements OnInit{
     }
 
     ngOnInit() {
-        if(this.authService.currentUser) {
+        if (this.authService.currentUser) {
             this.router.navigate(['/']);
         }
     }

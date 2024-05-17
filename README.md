@@ -26,7 +26,7 @@
 - [ ] 1 pont | Legalább 2 különböző strukturális direktíva használata
 - [ ] 1 pont | Adatátadás szülő és gyermek komponensek között (legalább 1 @Input és 1 @Output)
 - [ ] 5 pont | Legalább 10 különböző Material elem helyes használata
-- [ ] 2 pont | Adatbevitel Angular form-ok segítségével megvalósítva (legalább 2)
+- [x] 2 pont | Adatbevitel Angular form-ok segítségével megvalósítva (legalább 2)
 - [ ] 2 pont | Legalább 1 saját Pipe osztály írása és használata
 - [ ] 1 pont | Legalább 2 különböző Lifecycle Hook használata a teljes projektben (értelmes tartalommal, nem üresen)
 - [ ] 4 pont | CRUD műveletek mindegyike megvalósult (Promise, Observable használattal)
