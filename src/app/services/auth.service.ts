@@ -28,4 +28,9 @@ export class AuthService {
     async logout(): Promise<void> {
         return this.auth.signOut();
     }
+
+    // get the current user
+    get currentUser() {
+        return this.auth.currentUser;
+    }
 }

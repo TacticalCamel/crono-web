@@ -1,10 +1,14 @@
 import {AuthService} from "../../services/auth.service";
 import {NgIf} from "@angular/common";
 import {AbstractControl, FormControl, FormGroup, FormsModule, ValidationErrors, Validators} from "@angular/forms";
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
-import {FieldValidationMessageComponent} from "../shared/field-validation-message.component";
 import {Router} from "@angular/router";
+import {MatError, MatFormField, MatLabel, MatPrefix} from "@angular/material/form-field";
+import {MatIcon} from "@angular/material/icon";
+import {MatInput} from "@angular/material/input";
+import {MatButton} from "@angular/material/button";
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
 @Component({
     selector: 'route-register',
@@ -13,63 +17,105 @@ import {Router} from "@angular/router";
         NgIf,
         FormsModule,
         ReactiveFormsModule,
-        FieldValidationMessageComponent
+        MatError,
+        MatFormField,
+        MatIcon,
+        MatInput,
+        MatLabel,
+        MatPrefix,
+        MatButton,
+        MatProgressSpinner
     ],
     template: `
-        <div class="flex flex-col justify-center items-center h-screen">
-            <form class="w-96 grid gap-4" [formGroup]="registerForm" (ngSubmit)="tryRegister()">
-                <label class="input input-primary flex items-center gap-2 relative">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 opacity-70"><path
-                            d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z"/><path
-                            d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z"/></svg>
-                    <input type="text" class="grow" placeholder="Email" formControlName="email"/>
-                    <field-validation-message *ngIf="email.touched || email.dirty" [valid]="email.valid" class="absolute left-full ms-5 text-nowrap">
-                        Email must be in a valid format
-                    </field-validation-message>
-                </label>
+        <div class="flex flex-col justify-center items-center h-full">
+            <form class="w-96 grid gap-6" [formGroup]="registerForm" (ngSubmit)="tryRegister()">
+                <mat-form-field appearance="outline">
+                    <mat-icon color="primary" matPrefix>email</mat-icon>
+                    <mat-label>Email</mat-label>
+                    <input
+                        matInput
+                        type="email"
+                        formControlName="email"
+                        required
+                    />
+                    <mat-error *ngIf="email.getError('required')">Email is required</mat-error>
+                    <mat-error *ngIf="email.getError('email')">Email must be in a valid format</mat-error>
+                </mat-form-field>
 
-                <label class="input input-primary flex items-center gap-2 relative">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 opacity-70"><path
-                            d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z"/></svg>
-                    <input type="text" class="grow" placeholder="Username" formControlName="username"/>
-                    <field-validation-message *ngIf="username.touched || username.dirty" [valid]="username.valid" class="absolute left-full ms-5 text-nowrap">
-                        Username must be in a valid format
-                    </field-validation-message>
-                </label>
-                <label class="input input-primary flex items-center gap-2 relative">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 opacity-70"><path fill-rule="evenodd"
-                                                                                                                                     d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
-                                                                                                                                     clip-rule="evenodd"/></svg>
-                    <input type="password" class="grow" placeholder="Password" formControlName="password"/>
-                    <field-validation-message *ngIf="password.touched || password.dirty" [valid]="password.valid" class="absolute left-full ms-5 text-nowrap">
-                        {{ password.errors?.['message'] }}
-                    </field-validation-message>
-                </label>
-                <label class="input input-primary flex items-center gap-2 relative">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 opacity-70"><path fill-rule="evenodd"
-                                                                                                                                     d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
-                                                                                                                                     clip-rule="evenodd"/></svg>
-                    <input type="password" class="grow" placeholder="Confirm password" formControlName="passwordConfirm"/>
-                    <field-validation-message *ngIf="passwordConfirm.touched || passwordConfirm.dirty" [valid]="!registerForm.errors?.['passwordConfirm']" class="absolute left-full ms-5 text-nowrap">
-                        Passwords must match
-                    </field-validation-message>
-                </label>
-                <button type="submit" class="btn btn-primary mt-4" [disabled]="!registerForm.valid">Register</button>
+                <mat-form-field appearance="outline">
+                    <mat-icon color="primary" matPrefix>person</mat-icon>
+                    <mat-label>Username</mat-label>
+                    <input
+                        matInput
+                        type="text"
+                        formControlName="username"
+                        required
+                    />
+                    <mat-error *ngIf="username.getError('required')">Username is required</mat-error>
+                    <mat-error *ngIf="username.getError('minlength')">Username must be at least {{ usernameMinLength }} characters long</mat-error>
+                    <mat-error *ngIf="username.getError('maxlength')">Username must be at most {{ usernameMaxLength }} characters long</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-icon color="primary" matPrefix>key</mat-icon>
+                    <mat-label>Password</mat-label>
+                    <input
+                        matInput
+                        type="password"
+                        formControlName="password"
+                        required
+                    />
+                    <mat-error *ngIf="password.getError('message')">{{ password.getError('message') }}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-icon color="primary" matPrefix>key</mat-icon>
+                    <mat-label>Confirm password</mat-label>
+                    <input
+                        matInput
+                        type="password"
+                        formControlName="passwordConfirm"
+                        required
+                    />
+                    @if(passwordConfirm.getError('required')){
+                        <mat-error>Confirms password is required</mat-error>
+                    }
+                    @else if(registerForm.getError('passwordsNotEqual')){
+                        <mat-error>Passwords must match</mat-error>
+                    }
+                </mat-form-field>
+
+                <div class="flex items-center">
+                    <button class="me-8" mat-flat-button color="primary" type="submit" [disabled]="registerForm.invalid">Register</button>
+                    <mat-progress-spinner *ngIf="loading" [diameter]="35" mode="indeterminate"/>
+                    <mat-error *ngIf="registerForm.getError('invalid')">{{ registerForm.getError('invalid') }}</mat-error>
+                </div>
             </form>
         </div>
     `
 })
 
-export class RegisterComponent {
+export class RegisterComponent implements OnInit{
+    readonly usernameMinLength: number = 4;
+    readonly usernameMaxLength: number = 20;
+
     registerForm: FormGroup = new FormGroup({
         email: new FormControl('', [Validators.required, Validators.email]),
-        username: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(20)]),
-        password: new FormControl('', [passwordValidator]),
-        passwordConfirm: new FormControl('')
-    }, {validators: [passwordsConfirmValidator]});
+        username: new FormControl('', [Validators.required, Validators.minLength(this.usernameMinLength), Validators.maxLength(this.usernameMaxLength)]),
+        password: new FormControl('', [Validators.required, this.passwordValidator]),
+        passwordConfirm: new FormControl('', [Validators.required])
+    }, {validators: [this.passwordsConfirmValidator]});
+
+    loading: boolean = false;
 
     constructor(private authService: AuthService, private router: Router) {
 
+    }
+
+    ngOnInit() {
+        if(this.authService.currentUser) {
+            this.router.navigate(['/']);
+        }
     }
 
     get username(): AbstractControl {
@@ -89,78 +135,89 @@ export class RegisterComponent {
     }
 
     async tryRegister() {
-        this.authService.register(this.email.value, this.password.value, this.username.value).then(cred => {
-            this.router.navigate(['/login']);
-        }).catch(_ => {
-            this.registerForm.setErrors({invalid: true});
-        });
+        // start the loading spinner
+        this.loading = true;
+
+        // clear validation errors
+        this.registerForm.clearValidators();
+
+        // attempt to register
+        this.authService.register(this.email.value, this.password.value, this.username.value)
+            .then(_ => {
+                // on success, navigate to the home page
+                this.router.navigate(['/']);
+            })
+            .catch(e => {
+                // on failure, set a form error
+                this.registerForm.setErrors({invalid: e.message});
+            });
+
+        // stop the loading spinner
+        this.loading = false;
     }
-}
 
-// validator for the password
-export function passwordValidator(control: AbstractControl): ValidationErrors | null {
-    // password must be least 8 characters long
-    const isLengthValid = control.value.length >= 8;
+    // validator for the password
+    passwordValidator(control: AbstractControl): ValidationErrors | null {
+        // password must be least 8 characters long
+        const isLengthValid = control.value.length >= 8;
 
-    if (!isLengthValid) {
-        return {
-            message: 'Password must be at least 8 characters long'
+        if (!isLengthValid) {
+            return {
+                message: 'Password must be at least 8 characters long'
+            }
         }
-    }
 
-    // password must contain at least one lowercase letter
-    const doesContainLowercase = control.value.match(/[a-z]/);
+        // password must contain at least one lowercase letter
+        const doesContainLowercase = control.value.match(/[a-z]/);
 
-    if (!doesContainLowercase) {
-        return {
-            message: 'Password must contain at least one lowercase letter'
-        };
-    }
+        if (!doesContainLowercase) {
+            return {
+                message: 'Password must contain at least one lowercase letter'
+            };
+        }
 
-    // password must contain at least one uppercase letter
-    const doesContainUppercase = control.value.match(/[A-Z]/);
+        // password must contain at least one uppercase letter
+        const doesContainUppercase = control.value.match(/[A-Z]/);
 
-    if (!doesContainUppercase) {
-        return {
-            message: 'Password must contain at least one uppercase letter'
-        };
-    }
+        if (!doesContainUppercase) {
+            return {
+                message: 'Password must contain at least one uppercase letter'
+            };
+        }
 
-    // password must contain at least one number
-    const doesContainNumber = control.value.match(/\d/);
+        // password must contain at least one number
+        const doesContainNumber = control.value.match(/\d/);
 
-    if (!doesContainNumber) {
-        return {
-            message: 'Password must contain at least one number'
-        };
-    }
+        if (!doesContainNumber) {
+            return {
+                message: 'Password must contain at least one number'
+            };
+        }
 
-    // password must contain at least one special character
-    const doesContainSpecial = control.value.match(/\W/);
+        // password must contain at least one special character
+        const doesContainSpecial = control.value.match(/\W/);
 
-    if (!doesContainSpecial) {
-        return {
-            message: 'Password must contain at least one special character'
-        };
-    }
+        if (!doesContainSpecial) {
+            return {
+                message: 'Password must contain at least one special character'
+            };
+        }
 
-    // the password is valid
-    return null;
-}
-
-// validator for password confirmation
-function passwordsConfirmValidator(control: AbstractControl): ValidationErrors | null {
-    // get the password and password confirm fields
-    const password = control.get('password');
-    const passwordConfirm = control.get('passwordConfirm');
-
-    // password is confirmed
-    if (password?.value === passwordConfirm?.value) {
+        // the password is valid
         return null;
     }
 
-    // password is not confirmed
-    return {
-        passwordConfirm: true
-    };
+    // validator for password confirmation
+    passwordsConfirmValidator(control: AbstractControl): ValidationErrors | null {
+        // get the password and password confirm fields
+        const password = control.get('password');
+        const passwordConfirm = control.get('passwordConfirm');
+
+        // password is not confirmed
+        if (password?.value !== passwordConfirm?.value) {
+            passwordConfirm?.setErrors({passwordsNotEqual: true})
+        }
+
+        return {passwordsNotEqual: true};
+    }
 }

@@ -1,37 +1,40 @@
-@use '../../node_modules/@angular/material/index' as mat;
+@use '@angular/material' as mat;
+@use 'sass:map';
 
 @include mat.core();
 
-// define color palettes
-// available color palettes: https://material.io/design/color/
-$crono-web-primary: mat.define-palette(mat.$indigo-palette);
-$crono-web-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
-$crono-web-warn: mat.define-palette(mat.$red-palette);
+// light color palettes
+$light-primary: mat.define-palette(mat.$indigo-palette, 800, 700, 900);
+$light-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
 
+// dark color palettes
+$dark-primary: mat.define-palette(mat.$teal-palette, 400, 300, 500);
+$dark-accent: mat.define-palette(mat.$amber-palette, A200, A100, A400);
 
 // light theme
-$crono-light-theme: mat.define-light-theme((
+$light-theme: mat.define-light-theme((
     color: (
-        primary: $crono-web-primary,
-        accent: $crono-web-accent,
-        warn: $crono-web-warn,
-        success: mat.define-palette(mat.$green-palette),
+        primary: $light-primary,
+        accent: $light-accent
     ),
     typography: mat.define-typography-config(),
     density: 0,
 ));
-
 
 // dark theme
-$crono-dark-theme: mat.define-dark-theme((
+$dark-theme: mat.define-dark-theme((
     color: (
-        primary: $crono-web-primary,
-        accent: $crono-web-accent,
-        warn: $crono-web-warn,
+        primary: $dark-primary,
+        accent: $dark-accent,
     ),
     typography: mat.define-typography-config(),
     density: 0,
 ));
 
-// set current theme
-@include mat.all-component-themes($crono-dark-theme);
+// set theme
+@include mat.all-component-themes($light-theme);
+
+// custom dark theme styles
+body.dark-theme {
+    @include mat.all-component-colors($dark-theme);
+}

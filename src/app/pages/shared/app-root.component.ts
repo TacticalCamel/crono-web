@@ -1,11 +1,14 @@
 import {Component} from '@angular/core';
-import {RouterOutlet} from '@angular/router';
+import {RouterLink, RouterOutlet} from '@angular/router';
 import {AppNavMenuComponent} from "./app-nav-menu.component";
 import {MatIcon} from "@angular/material/icon";
 import {MatButton, MatIconButton} from "@angular/material/button";
 import {MatSidenav, MatSidenavContainer, MatSidenavContent} from "@angular/material/sidenav";
 import {MatToolbar} from "@angular/material/toolbar";
 import {MatListItem, MatNavList} from "@angular/material/list";
+import {MatSlideToggle} from "@angular/material/slide-toggle";
+import {NgOptimizedImage} from "@angular/common";
+import {FormsModule} from "@angular/forms";
 
 @Component({
     selector: 'app-root',
@@ -20,33 +23,22 @@ import {MatListItem, MatNavList} from "@angular/material/list";
         MatSidenavContent,
         MatToolbar,
         MatNavList,
-        MatListItem
+        MatListItem,
+        MatButton,
+        MatSlideToggle,
+        NgOptimizedImage,
+        RouterLink,
+        FormsModule,
     ],
     template: `
-        <mat-sidenav-container>
-            <mat-sidenav-content>
-                <mat-toolbar color="primary">
-                    <div class="sm:hidden">
-                        <button mat-icon-button (click)="toggleSideBar(sidenav)">
-                            <mat-icon>menu</mat-icon>
-                        </button>
-                    </div>
-                    <div class="hidden sm:flex">
-                        <app-nav-menu/>
-                    </div>
-                </mat-toolbar>
-            </mat-sidenav-content>
-        </mat-sidenav-container>
+        <app-nav-menu/>
 
-        <main class="grow">
-            <mat-sidenav class="w-96" position="end" mode="push" #sidenav>
-                <app-nav-menu/>
-            </mat-sidenav>
+        <main class="grow relative">
             <router-outlet/>
         </main>
 
-        <footer class="bg-neutral flex justify-end px-8 py-0.5">
-            <a class="link link-primary" href="https://github.com/TacticalCamel/crono-web">Github repo</a>
+        <footer class="flex justify-end px-8 py-0.5">
+            <a href="https://github.com/TacticalCamel/crono-web">Github repo</a>
         </footer>
     `,
     styles: `
@@ -63,7 +55,5 @@ import {MatListItem, MatNavList} from "@angular/material/list";
 })
 
 export class AppRootComponent {
-    toggleSideBar(sidenav: MatSidenav) {
-        sidenav.toggle();
-    }
+
 }

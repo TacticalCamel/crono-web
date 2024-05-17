@@ -1,7 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../../services/auth.service';
-import {FieldValidationMessageComponent} from "../shared/field-validation-message.component";
 import {NgIf} from "@angular/common";
 import {Router, RouterLink} from "@angular/router";
 import {MatError, MatFormField, MatHint, MatLabel, MatPrefix} from "@angular/material/form-field";
@@ -14,7 +13,6 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
     selector: 'route-login',
     standalone: true,
     imports: [
-        FieldValidationMessageComponent,
         ReactiveFormsModule,
         NgIf,
         MatFormField,
@@ -29,7 +27,7 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
         RouterLink
     ],
     template: `
-        <div class="flex flex-col justify-center items-center h-screen bg-[#131822]">
+        <div class="flex flex-col justify-center items-center h-full">
             <form class="w-96 grid gap-6" [formGroup]="loginForm" (ngSubmit)="tryLogin()">
                 <mat-form-field appearance="outline">
                     <mat-icon color="primary" matPrefix>email</mat-icon>
@@ -44,7 +42,7 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
-                    <mat-icon color="success" matPrefix>key</mat-icon>
+                    <mat-icon color="primary" matPrefix>key</mat-icon>
                     <mat-label>Password</mat-label>
                     <input
                         matInput
@@ -57,8 +55,12 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
                 <div class="flex items-center">
                     <button class="me-8" mat-flat-button color="primary" type="submit" [disabled]="email.invalid || password.invalid">Login</button>
-                    <mat-progress-spinner *ngIf="loading" [diameter]="35" mode="indeterminate"/>
-                    <mat-error *ngIf="loginForm.getError('invalid')">Invalid login credentials</mat-error>
+                    @if(loading){
+                        <mat-progress-spinner [diameter]="35" mode="indeterminate"/>
+                    }
+                    @else if(loginForm.getError('invalid')){
+                        <mat-error>Invalid login credentials</mat-error>
+                    }
                 </div>
                 
                 <a routerLink="/register" class="hover:underline text-indigo-500 cursor-pointer">Don't have an account? Register here.</a>
@@ -67,7 +69,7 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
     `
 })
 
-export class LoginComponent {
+export class LoginComponent implements OnInit{
     loginForm: FormGroup = new FormGroup({
         email: new FormControl('', [Validators.required]),
         password: new FormControl('', [Validators.required])
@@ -77,6 +79,12 @@ export class LoginComponent {
 
     constructor(private authService: AuthService, private router: Router) {
 
+    }
+
+    ngOnInit() {
+        if(this.authService.currentUser) {
+            this.router.navigate(['/']);
+        }
     }
 
     get email() {
@@ -96,7 +104,7 @@ export class LoginComponent {
 
         // attempt to login
         this.authService.login(this.email.value, this.password.value)
-            .then(cred => {
+            .then(_ => {
                 // on success, navigate to the home page
                 this.router.navigate(['/']);
             })
