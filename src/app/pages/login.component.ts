@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {AuthService} from '../../services/auth.service';
+import {AuthService} from '../services/auth.service';
 import {NgIf} from "@angular/common";
 import {Router, RouterLink} from "@angular/router";
-import {MatError, MatFormField, MatHint, MatLabel, MatPrefix} from "@angular/material/form-field";
+import {MatError, MatFormField, MatLabel, MatPrefix} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {MatButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
@@ -19,7 +19,6 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
         MatLabel,
         MatInput,
         MatError,
-        MatHint,
         MatButton,
         MatIcon,
         MatPrefix,
@@ -27,7 +26,7 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
         RouterLink
     ],
     template: `
-        <div class="flex flex-col justify-center items-center p-8 my-auto">
+        <div class="flex flex-col justify-center items-center p-8">
             <form class="w-full sm:w-96 grid gap-6" [formGroup]="loginForm" (ngSubmit)="tryLogin()">
                 <mat-form-field appearance="outline">
                     <mat-icon color="primary" matPrefix>email</mat-icon>
@@ -77,7 +76,7 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
     `
 })
 
-export class LoginComponent implements OnInit{
+export class LoginComponent {
     loginForm: FormGroup = new FormGroup({
         email: new FormControl('', [Validators.required]),
         password: new FormControl('', [Validators.required])
@@ -85,14 +84,8 @@ export class LoginComponent implements OnInit{
 
     loading: boolean = false;
 
-    constructor(private authService: AuthService, private router: Router) {
+    constructor(private auth: AuthService, private router: Router) {
 
-    }
-
-    ngOnInit() {
-        if(this.authService.currentUser) {
-            this.router.navigate(['/']);
-        }
     }
 
     get email() {
@@ -111,7 +104,7 @@ export class LoginComponent implements OnInit{
         this.loginForm.clearValidators();
 
         // attempt to login
-        this.authService.login(this.email.value, this.password.value)
+        this.auth.login(this.email.value, this.password.value)
             .then(_ => {
                 // on success, navigate to the home page
                 this.router.navigate(['/']);

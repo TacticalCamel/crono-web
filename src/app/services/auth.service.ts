@@ -1,11 +1,14 @@
-import {Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, UserCredential, updateProfile} from '@angular/fire/auth';
+import {Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, UserCredential, updateProfile, onAuthStateChanged, User} from '@angular/fire/auth';
 import {Injectable} from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
+    public static readonly USERS_COLLECTION = 'users';
+
     constructor(private auth: Auth) {
+
     }
 
     // register a user with email and password
@@ -20,7 +23,7 @@ export class AuthService {
     }
 
     // login a user with email and password
-    async login(email: string, password: string) {
+    async login(email: string, password: string): Promise<UserCredential> {
         return signInWithEmailAndPassword(this.auth, email, password);
     }
 
@@ -29,8 +32,7 @@ export class AuthService {
         return this.auth.signOut();
     }
 
-    // get the current user
-    get currentUser() {
-        return this.auth.currentUser;
+    onAuthStateChanged(callback: (user: User | null) => void): void {
+        onAuthStateChanged(this.auth, callback);
     }
 }

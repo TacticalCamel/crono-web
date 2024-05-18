@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {RouterLink, RouterOutlet} from '@angular/router';
 import {AppNavMenuComponent} from "./app-nav-menu.component";
+import {AppFooterComponent} from "./app-footer.component";
 
 @Component({
     selector: 'app-root',
@@ -9,16 +10,15 @@ import {AppNavMenuComponent} from "./app-nav-menu.component";
         RouterOutlet,
         RouterLink,
         AppNavMenuComponent,
+        AppFooterComponent
     ],
     template: `
         <div class="h-screen w-screen flex flex-col">
             <app-nav-menu/>
-    
+
             <main class="grow relative overflow-y-auto flex flex-col">
                 <router-outlet/>
-                <footer class="flex justify-end px-8 py-0.5 bg-gray-700">
-                    <a class="text-blue-400" href="https://github.com/TacticalCamel/crono-web" target="_blank">Github repo</a>
-                </footer>
+                <app-footer/>
             </main>
         </div>
     `,

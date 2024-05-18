@@ -16,16 +16,16 @@
 
 ### Pontozás
 
-- [x] 1 pont | Fordítási hiba nincs (ng serve kiadásakor nincs hiba)
-- [x] 1 pont | Futtatási hiba nincs (böngésző konzol részében nincs hiba)
-- [x] 1 pont | Firebase Hosting URL (létezik, és minden végpont megfelelő módon betöltődik)
-- [ ] 2 pont | Adatmodell definiálása (legalább 4 TypeScript interfész vagy class formájában)
-- [ ] 1 pont | Alkalmazás felbontása megfelelő számú komponensre (egyetlen .ts és .html fájl sem haladja meg a 250 sort és soronként a 400 karaktert)
-- [ ] 1 pont | Reszponzív, mobile-first felület (minden adat látható és jól jelenik meg böngészőben is, mobil nézetben is)
-- [ ] 1 pont | Legalább 2 különböző attribútum direktíva használata
+- [x] 1 pont | 1. Fordítási hiba nincs (ng serve kiadásakor nincs hiba)
+- [x] 1 pont | 2. Futtatási hiba nincs (böngésző konzol részében nincs hiba)
+- [x] 1 pont | 3. Firebase Hosting URL (létezik, és minden végpont megfelelő módon betöltődik)
+- [ ] 2 pont | 4. Adatmodell definiálása (legalább 4 TypeScript interfész vagy class formájában)
+- [ ] 1 pont | 5. Alkalmazás felbontása megfelelő számú komponensre (egyetlen .ts és .html fájl sem haladja meg a 250 sort és soronként a 400 karaktert)
+- [x] 1 pont | 6. Reszponzív, mobile-first felület (minden adat látható és jól jelenik meg böngészőben is, mobil nézetben is)
+- [ ] 1 pont | 7. Legalább 2 különböző attribútum direktíva használata
 - [ ] 1 pont | Legalább 2 különböző strukturális direktíva használata
 - [ ] 1 pont | Adatátadás szülő és gyermek komponensek között (legalább 1 @Input és 1 @Output)
-- [ ] 5 pont | Legalább 10 különböző Material elem helyes használata
+- [x] 5 pont | Legalább 10 különböző Material elem helyes használata
 - [x] 2 pont | Adatbevitel Angular form-ok segítségével megvalósítva (legalább 2)
 - [ ] 2 pont | Legalább 1 saját Pipe osztály írása és használata
 - [ ] 1 pont | Legalább 2 különböző Lifecycle Hook használata a teljes projektben (értelmes tartalommal, nem üresen)
@@ -33,8 +33,9 @@
 - [ ] 1 pont | CRUD műveletek service-ekbe vannak kiszervezve és megfelelő módon injektálva lettek
 - [ ] 1 pont | Firestore adatbázis használata az adatokhoz (integráció, környezeti változók használata helyes legyen)
 - [ ] 4 pont | Legalább 2 komplex Firestore lekérdezés megvalósítása (where feltétel, rendezés, léptetés, limitálás)
-- [ ] 1 pont | Legalább 4 különböző route a különböző oldalak eléréséhez
-- [ ] 2 pont | Legalább 2 route levédése azonosítással, ahol ennek értelme van (AuthGuard)
+- [x] 1 pont | Legalább 4 különböző route a különböző oldalak eléréséhez
+- [x] 2 pont | Legalább 2 route levédése azonosítással, ahol ennek értelme van (AuthGuard)
 - [ ] 6 pont | Szubjektív pontozás a projekt egészére (mennyire fedi le a projekt a témakört, mennyi lehet a befektetett energia a projektben)
 #### Összesen: 40
-#### Minimum pontszám: 20
+
+#### Minimum pontszám: 28

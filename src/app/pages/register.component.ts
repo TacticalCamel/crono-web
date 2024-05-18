@@ -1,7 +1,7 @@
-import {AuthService} from "../../services/auth.service";
+import {AuthService} from "../services/auth.service";
 import {NgIf} from "@angular/common";
 import {AbstractControl, FormControl, FormGroup, FormsModule, ValidationErrors, Validators} from "@angular/forms";
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {Router, RouterLink} from "@angular/router";
 import {MatError, MatFormField, MatLabel, MatPrefix} from "@angular/material/form-field";
@@ -105,7 +105,7 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
     `
 })
 
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
     readonly usernameMinLength: number = 4;
     readonly usernameMaxLength: number = 20;
 
@@ -118,14 +118,8 @@ export class RegisterComponent implements OnInit {
 
     loading: boolean = false;
 
-    constructor(private authService: AuthService, private router: Router) {
+    constructor(private auth: AuthService, private router: Router) {
 
-    }
-
-    ngOnInit() {
-        if (this.authService.currentUser) {
-            this.router.navigate(['/']);
-        }
     }
 
     get username(): AbstractControl {
@@ -152,7 +146,7 @@ export class RegisterComponent implements OnInit {
         this.registerForm.clearValidators();
 
         // attempt to register
-        this.authService.register(this.email.value, this.password.value, this.username.value)
+        this.auth.register(this.email.value, this.password.value, this.username.value)
             .then(_ => {
                 // on success, navigate to the home page
                 this.router.navigate(['/']);
