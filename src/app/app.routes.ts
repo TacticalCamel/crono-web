@@ -9,6 +9,7 @@ import {ActivitiesComponent} from "./pages/activities.component";
 const redirectLoggedInToHome = () => redirectLoggedInTo(['']);
 const redirectLoggedOutToLogin = () => redirectUnauthorizedTo(['login']);
 
+// TODO min 4 route, min 2 le is van védve
 export const routes: Routes = [
     {path: 'login', component: LoginComponent, canActivate: [AuthGuard], data: {authGuardPipe: redirectLoggedInToHome}},
     {path: 'register', component: RegisterComponent, canActivate: [AuthGuard], data: {authGuardPipe: redirectLoggedInToHome}},

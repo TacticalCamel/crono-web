@@ -7,6 +7,7 @@ import {AuthService} from "./auth.service";
 @Injectable({
     providedIn: 'root'
 })
+// TODO CRUD pl ebben a service-ben
 export class CategoryService {
     private static readonly COLLECTION_NAME = 'categories';
 
@@ -70,6 +71,7 @@ export class CategoryService {
         return true;
     }
 
+    // TODO ez a "read", csak real time frissítéssel van megvalósítva
     listen(listener: (snapshot: QuerySnapshot) => void): Unsubscribe | null {
         const collection = this.getCollection();
 

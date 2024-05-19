@@ -4,6 +4,7 @@ import {Pipe, PipeTransform} from '@angular/core';
     name: 'search',
     standalone: true
 })
+// TODo saját pipe osztály
 export class SearchPipe implements PipeTransform {
     public transform(collection: any[], fieldName: string, searchTerm: string) {
         if (!searchTerm) {

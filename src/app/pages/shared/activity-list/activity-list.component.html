@@ -86,28 +86,28 @@
 
     <!-- activity list -->
     <div *ngIf="!formOpen && (activities | search:'name':searchField.value | sort:'name':false) as activities" class="flex justify-center">
-        <div *ngIf="!activities.length">
+        <div *ngIf="!activities.length" class="w-full">
             <span class="p-3">No items found.</span>
             <span *ngIf="searchField.value" class="hover:underline transition-colors text-amber-500 p-3 cursor-pointer ms-2" (click)="searchField.reset()">Clear search field</span>
         </div>
-        <table matSort class="grow sm:grow-0">
+        <table *ngIf="activities.length" matSort class="grow sm:grow-0">
             <thead class="select-none">
                 <tr>
-                    <th mat-sort-header="name" class="p-1 pe-6 sm:pe-12 pb-3 transition-colors hover:text-amber-500 font-normal">Name</th>
-                    <th mat-sort-header="score" class="p-1 pe-6 sm:pe-12 pb-3 transition-colors hover:text-amber-500 font-normal">Score</th>
-                    <th class="text-start p-1 pb-3 font-normal">Actions</th>
+                    <th mat-sort-header="name" class="p-1 pe-6 sm:pe-12 pb-3 transition-colors hover:text-amber-500 font-normal border-solid border-0 border-b border-white">Name</th>
+                    <th mat-sort-header="score" class="p-1 pe-6 sm:pe-12 pb-3 transition-colors hover:text-amber-500 font-normal border-solid border-0 border-b border-white">Score</th>
+                    <th class="text-start p-1 pb-3 font-normal border-solid border-0 border-b border-white">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let activity of activities">
-                    <td class="p-1 px-2 pe-6 sm:pe-12 border-solid border-0 border-b border-white border-opacity-30">{{ activity.name }}</td>
-                    <td class="p-1 ps-2 border-solid border-0 border-b border-white border-opacity-30">
+                    <td class="p-2 pe-6 sm:pe-12 border-solid border-0 border-b border-white border-opacity-30">{{ activity.name }}</td>
+                    <td class="p-2 border-solid border-0 border-b border-white border-opacity-30">
                         <div class="flex items-center justify-between">
                             <span class="pe-6 sm:pe-12">{{ activity.score }}</span>
                             <span *ngIf="activity.isFixedScore" class="font-light opacity-60 text-sm pe-2">[fixed]</span>
                         </div>
                     </td>
-                    <td class="p-1 border-solid border-0 border-b border-white border-opacity-30 select-none">
+                    <td class="p-2 border-solid border-0 border-b border-white border-opacity-30 select-none">
                         <div class="flex">
                             <div class="transition-colors hover:text-green-500 cursor-pointer flex items-center me-4 sm:me-8" (click)="startActivity(activity)">
                                 <mat-icon>play_arrow</mat-icon>
