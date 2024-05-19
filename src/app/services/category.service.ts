@@ -8,10 +8,10 @@ import {AuthService} from "./auth.service";
     providedIn: 'root'
 })
 export class CategoryService {
-    public static readonly CATEGORIES_COLLECTION = 'categories';
+    private static readonly COLLECTION_NAME = 'categories';
 
     constructor(private firestore: Firestore, private auth: Auth) {
-        doc(this.firestore, 'users', this.auth.currentUser?.uid ?? '');
+
     }
 
     private getCollection() {
@@ -23,7 +23,7 @@ export class CategoryService {
 
         return collection(
             doc(collection(this.firestore, AuthService.USERS_COLLECTION), userId),
-            CategoryService.CATEGORIES_COLLECTION
+            CategoryService.COLLECTION_NAME
         );
     }
 

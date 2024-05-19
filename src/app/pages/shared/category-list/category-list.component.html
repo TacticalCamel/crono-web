@@ -1,0 +1,64 @@
+<div class="p-4 sm:p-8">
+    <div class="flex items-center justify-between">
+        <!-- header -->
+        <div class="flex items-center px-4 mb-5 h-14 bg-white bg-opacity-10 rounded grow me-4 sm:me-8 -mt-0.5">
+            <div class="text-xl me-4 sm:me-8 py-2">Categories</div>
+            <div class="rounded-xl bg-white bg-opacity-10 m-2">
+                <mat-icon *ngIf="!formOpen" (click)="openCreateForm()" class="hover:text-green-500 transition-colors p-1.5 pb-0.5">add</mat-icon>
+                <mat-icon *ngIf="formOpen" (click)="formOpen = false" class="hover:text-red-500 transition-colors p-1.5 pb-0.5">clear</mat-icon>
+            </div>
+        </div>
+
+        <!-- search -->
+        <mat-form-field appearance="outline">
+            <mat-icon color="primary" matPrefix>search</mat-icon>
+            <mat-label>Search</mat-label>
+            <input
+                matInput
+                type="text"
+                [formControl]="searchField"
+            />
+        </mat-form-field>
+    </div>
+
+    <!-- create category -->
+    <form *ngIf="formOpen" [formGroup]="form" class="flex items-center mb-4">
+        <!-- name -->
+        <mat-form-field appearance="outline">
+            <mat-icon color="primary" matPrefix>toc</mat-icon>
+            <mat-label>Name</mat-label>
+            <input
+                matInput
+                type="text"
+                required
+                formControlName="name"
+            />
+            <mat-error *ngIf="name.getError('required')">Name is required</mat-error>
+        </mat-form-field>
+
+        <!-- submit -->
+        <div class="flex items-center mb-4 ms-8">
+            <button *ngIf="!updatedId" class="me-8" mat-flat-button color="primary" (click)="createCategory()" [disabled]="name.invalid">Create</button>
+            <button *ngIf="updatedId" class="me-8" mat-flat-button color="primary" (click)="updateCategory()" [disabled]="name.invalid">Update</button>
+            @if (loading) {
+                <mat-progress-spinner [diameter]="35" mode="indeterminate"/>
+            } @else if (name.getError('invalid')) {
+                <mat-error>Invalid data</mat-error>
+            }
+        </div>
+    </form>
+
+    <!-- category list -->
+    <div *ngIf="!formOpen && (collection | search:'name':searchField.value | sort:'name':false) as categories" class="flex flex-wrap">
+        <div *ngIf="!categories.length">
+            <span class="p-3">No items found.</span>
+            <span *ngIf="searchField.value" class="hover:underline transition-colors text-amber-500 p-3 cursor-pointer ms-2" (click)="searchField.reset()">Clear search field</span>
+        </div>
+        <div *ngFor="let category of categories">
+            <div class="flex items-center py-1 border border-solid border-amber-500 rounded-lg m-2">
+                <span class="ps-3 pe-1 py-1 transition-colors hover:text-amber-500 cursor-pointer" (click)="openUpdateForm(category)">{{ category.name }}</span>
+                <mat-icon class="transition-colors hover:text-red-500 cursor-pointer ps-1 pe-2" (click)="deleteCategory(category)">clear</mat-icon>
+            </div>
+        </div>
+    </div>
+</div>

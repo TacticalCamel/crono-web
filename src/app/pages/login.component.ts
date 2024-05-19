@@ -14,16 +14,16 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
     standalone: true,
     imports: [
         ReactiveFormsModule,
+        RouterLink,
         NgIf,
         MatFormField,
-        MatLabel,
-        MatInput,
         MatError,
-        MatButton,
+        MatLabel,
         MatIcon,
+        MatInput,
         MatPrefix,
+        MatButton,
         MatProgressSpinner,
-        RouterLink
     ],
     template: `
         <div class="flex flex-col justify-center items-center p-8">
@@ -71,7 +71,7 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            flex-grow: 1;
         }
     `
 })

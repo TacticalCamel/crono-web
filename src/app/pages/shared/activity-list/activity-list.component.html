@@ -1,0 +1,132 @@
+<div class="p-4 sm:p-8">
+    <div class="flex items-center justify-between">
+        <!-- header -->
+        <div class="flex items-center px-4 mb-5 h-14 bg-white bg-opacity-10 rounded grow me-4 sm:me-8 -mt-0.5">
+            <div class="text-xl me-4 sm:me-8 py-2">Activities</div>
+            <div class="rounded-xl bg-white bg-opacity-10 m-2">
+                <mat-icon *ngIf="!formOpen" (click)="openCreateForm()" class="hover:text-green-500 transition-colors p-1.5 pb-0.5">add</mat-icon>
+                <mat-icon *ngIf="formOpen" (click)="formOpen = false" class="hover:text-red-500 transition-colors p-1.5 pb-0.5">clear</mat-icon>
+            </div>
+        </div>
+
+        <!-- search -->
+        <mat-form-field appearance="outline">
+            <mat-icon color="primary" matPrefix>search</mat-icon>
+            <mat-label>Search</mat-label>
+            <input
+                matInput
+                type="text"
+                [formControl]="searchField"
+            />
+        </mat-form-field>
+    </div>
+
+    <!-- create activity -->
+    <div class="w-full flex justify-center md:block">
+        <form *ngIf="formOpen" [formGroup]="form" class="flex items-start md:items-center flex-col md:flex-row mb-4">
+            <!-- name -->
+            <mat-form-field appearance="outline">
+                <mat-icon color="primary" matPrefix>toc</mat-icon>
+                <mat-label>Name</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    formControlName="name"
+                />
+                <mat-error *ngIf="name.getError('required')">Name is required</mat-error>
+            </mat-form-field>
+
+            <!-- score -->
+            <mat-form-field appearance="outline" class="md:ms-8">
+                <mat-icon color="primary" matPrefix>star_rate</mat-icon>
+                <mat-label>Score</mat-label>
+                <input
+                    matInput
+                    type="number"
+                    formControlName="score"
+                />
+                <mat-error *ngIf="score.getError('required')">Score is required</mat-error>
+            </mat-form-field>
+
+            <!-- category -->
+            <mat-form-field appearance="outline" class="md:ms-8">
+                <mat-icon color="primary" matPrefix>category</mat-icon>
+                <mat-label>Category</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    formControlName="category"
+                    [matAutocomplete]="auto"
+                />
+                <mat-autocomplete requireSelection #auto="matAutocomplete">
+                    @for (category of filteredCategories | async; track category.id) {
+                        <mat-option [value]="category.id">{{ category.name }}</mat-option>
+                    }
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <!-- is fixed score -->
+            <div class="md:ms-8 mb-8 md:mb-5 md:-mt-0.5">
+                <div class="mb-2 w-32">{{ isFixedScore.value ? 'Fixed score' : 'Variable score' }}</div>
+                <mat-slide-toggle color="primary" formControlName="isFixedScore"/>
+            </div>
+
+            <!-- submit -->
+            <div class="flex items-center md:mb-4 md:ms-8">
+                <button *ngIf="!updatedId" class="me-8" mat-flat-button color="primary" (click)="createActivity()" [disabled]="name.invalid">Create</button>
+                <button *ngIf="updatedId" class="me-8" mat-flat-button color="primary" (click)="updateActivity()" [disabled]="name.invalid">Update</button>
+                @if (loading) {
+                    <mat-progress-spinner [diameter]="35" mode="indeterminate"/>
+                } @else if (name.getError('invalid')) {
+                    <mat-error>Invalid data</mat-error>
+                }
+            </div>
+        </form>
+    </div>
+
+    <!-- activity list -->
+    <div *ngIf="!formOpen && (activities | search:'name':searchField.value | sort:'name':false) as activities" class="flex justify-center">
+        <div *ngIf="!activities.length">
+            <span class="p-3">No items found.</span>
+            <span *ngIf="searchField.value" class="hover:underline transition-colors text-amber-500 p-3 cursor-pointer ms-2" (click)="searchField.reset()">Clear search field</span>
+        </div>
+        <table matSort class="grow sm:grow-0">
+            <thead class="select-none">
+                <tr>
+                    <th mat-sort-header="name" class="p-1 pe-6 sm:pe-12 pb-3 transition-colors hover:text-amber-500 font-normal">Name</th>
+                    <th mat-sort-header="score" class="p-1 pe-6 sm:pe-12 pb-3 transition-colors hover:text-amber-500 font-normal">Score</th>
+                    <th class="text-start p-1 pb-3 font-normal">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let activity of activities">
+                    <td class="p-1 px-2 pe-6 sm:pe-12 border-solid border-0 border-b border-white border-opacity-30">{{ activity.name }}</td>
+                    <td class="p-1 ps-2 border-solid border-0 border-b border-white border-opacity-30">
+                        <div class="flex items-center justify-between">
+                            <span class="pe-6 sm:pe-12">{{ activity.score }}</span>
+                            <span *ngIf="activity.isFixedScore" class="font-light opacity-60 text-sm pe-2">[fixed]</span>
+                        </div>
+                    </td>
+                    <td class="p-1 border-solid border-0 border-b border-white border-opacity-30 select-none">
+                        <div class="flex">
+                            <div class="transition-colors hover:text-green-500 cursor-pointer flex items-center me-4 sm:me-8" (click)="startActivity(activity)">
+                                <mat-icon>play_arrow</mat-icon>
+                                <span class="ms-1 hidden sm:inline text-xs font-semibold uppercase">start</span>
+                            </div>
+
+                            <div class="transition-colors hover:text-amber-500 cursor-pointer flex items-center me-4 sm:me-8" (click)="openUpdateForm(activity)">
+                                <mat-icon>edit_note</mat-icon>
+                                <span class="ms-1 hidden sm:inline text-xs font-semibold uppercase">edit</span>
+                            </div>
+
+                            <div class="transition-colors hover:text-red-500 cursor-pointer flex items-center" (click)="deleteActivity(activity)">
+                                <mat-icon>clear</mat-icon>
+                                <span class="ms-1 hidden sm:inline text-xs font-semibold uppercase">delete</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

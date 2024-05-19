@@ -1,14 +1,15 @@
 import {Injectable} from '@angular/core';
-import {Firestore, collection, DocumentReference, doc, setDoc, deleteDoc, updateDoc, onSnapshot, Unsubscribe, QuerySnapshot, getDoc, query, orderBy} from "@angular/fire/firestore";
+import {Firestore, collection, DocumentReference, doc, setDoc, deleteDoc, updateDoc, onSnapshot, Unsubscribe, QuerySnapshot, query, orderBy} from "@angular/fire/firestore";
 import {Auth} from "@angular/fire/auth";
+import {Event} from "../models/Event";
 import {AuthService} from "./auth.service";
 import {Activity} from "../models/Activity";
 
 @Injectable({
     providedIn: 'root'
 })
-export class ActivityService {
-    private static readonly COLLECTION_NAME = 'activities';
+export class EventService {
+    private static readonly COLLECTION_NAME = 'events';
 
     constructor(private firestore: Firestore, private auth: Auth) {
 
@@ -23,28 +24,11 @@ export class ActivityService {
 
         return collection(
             doc(collection(this.firestore, AuthService.USERS_COLLECTION), userId),
-            ActivityService.COLLECTION_NAME
+            EventService.COLLECTION_NAME
         );
     }
 
-    async readOne(id: string): Promise<Activity | null> {
-        const collection = this.getCollection();
-
-        if (!collection) {
-            return null;
-        }
-
-        const docRef = doc(collection, id);
-        const docSnap = await getDoc(docRef);
-
-        if (!docSnap.exists()) {
-            return null;
-        }
-
-        return docSnap.data() as Activity;
-    }
-
-    async create(name: string, score: number, isFixedScore: boolean): Promise<boolean> {
+    async create(activity: Activity): Promise<boolean> {
         const collection = this.getCollection();
 
         if (!collection) {
@@ -55,9 +39,9 @@ export class ActivityService {
 
         const entity: object = {
             id: document.id,
-            name: name,
-            score: score,
-            isFixedScore: isFixedScore
+            activityId: activity.id,
+            start: Date.now(),
+            end: null,
         };
 
         await setDoc(document, entity);
@@ -65,7 +49,7 @@ export class ActivityService {
         return true;
     }
 
-    async update(entity: Activity): Promise<boolean> {
+    async update(entity: Event): Promise<boolean> {
         const collection = this.getCollection();
 
         if (!collection) {
@@ -96,9 +80,9 @@ export class ActivityService {
             return null;
         }
 
-        // TODO komplex lekérdezés 2 (szintén nagyon komplex)
-        const q = query(collection, orderBy('name', 'asc'));
+        // TODO komplex lekérdezés 1 (nagyon komplex...)
+        const q = query(collection, orderBy('start', 'desc'))
 
-        return onSnapshot(collection, listener);
+        return onSnapshot(q, listener);
     }
 }
